@@ -22,6 +22,7 @@ public class PostService {
 	}
 	//http://localhost:8080/posts/titlesearch?text=bom%20dia
 	public List<Post> findByTitle(String text){
-		return repo.findByTitleContainingIgnoreCase(text);
+		return repo.searchTitle(text);
+		//return repo.findByTitleContainingIgnoreCase(text);
 	}
 }
