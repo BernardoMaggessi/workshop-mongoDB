@@ -22,6 +22,12 @@ public class PostResource {
 	@Autowired
 	private PostService service;
 	
+	@GetMapping
+	public ResponseEntity<List<Post>> findAll(){
+		List<Post> list = service.findAll();
+		return ResponseEntity.ok().body(list);
+	}
+	
 	@GetMapping("/{id}")
 	public ResponseEntity<Post> findById(@PathVariable String id){
 		Post obj = service.findById(id);
@@ -44,6 +50,12 @@ public class PostResource {
 		Date max = URL.convertDate(maxDate, new Date());
 		List<Post> list = service.fullSearch(text, min, max);
 		return ResponseEntity.ok().body(list);
+	}
+	@GetMapping("/searchByAuthor")
+	public ResponseEntity<List<Post>> findByAuthor(@RequestParam(value = "author", defaultValue = "") String author) {
+	    author = URL.decodeParam(author);  // Decodifica o texto para garantir que não tenha problemas com caracteres especiais
+	    List<Post> list = service.searchByAuthor(author);  // Chama o serviço para buscar os posts pelo autor
+	    return ResponseEntity.ok().body(list);  // Retorna a lista de posts encontrados
 	}
 
 }

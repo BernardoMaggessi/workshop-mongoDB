@@ -16,7 +16,10 @@ public class PostService {
 	
 	@Autowired
 	private PostRepository repo;
-	
+
+	public List<Post> findAll(){
+		return repo.findAll();
+	}
 	public Post findById(String id) {
 		Optional<Post> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
@@ -29,5 +32,8 @@ public class PostService {
 	public List<Post> fullSearch(String text, Date minDate, Date maxDate){
 		maxDate = new Date(maxDate.getTime() +24*60*60*1000);
 		return repo.fullSearch(text, minDate, maxDate);
+	}
+	public List<Post> searchByAuthor(String txt){
+		return repo.searchByAuthor(txt);
 	}
 }
